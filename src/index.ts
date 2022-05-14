@@ -1,11 +1,9 @@
-/* eslint-disable comma-dangle */
-/* eslint-disable import/no-unresolved */
 import dotenv from 'dotenv';
 import express, { Express, Request, Response } from 'express';
 import * as userService from './db/services/userService';
 // eslint-disable-next-line import/extensions
 import userRouter from './api/routes/users';
-import { UserInput } from './db/models/User';
+import { UserInput } from './db/entity/User';
 
 dotenv.config();
 
@@ -24,15 +22,9 @@ app.use(bodyParser.json());
 app.use('/users', userRouter);
 
 app.post('/login', (req: Request, res: Response) => {
-  /*  const payload: UserInput = {
-    email: String(req.body.email),
-    password: String(req.body.password),
-  }; */
   const payload: UserInput = req.body;
-  //console.log({ payload });
-  //console.log(typeof req.body.password);
   res.send('Guardando usuario');
-  return userService.create(payload);
+  return userService.createUser(payload);
 });
 
 app.listen(port, () => {
