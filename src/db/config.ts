@@ -1,12 +1,30 @@
-import { Sequelize } from 'sequelize';
-
+import dotenv from 'dotenv';
+import 'reflect-metadata';
+import { DataSource } from 'typeorm';
+import { Organization } from './entity/Organization';
+import { User } from './entity/User';
+dotenv.config();
+const host = process.env.DB_HOST as string;
+const port = process.env.DB_PORT as undefined;
+const username = process.env.DB_DRIVER as string;
+const password = process.env.DB_PASSWORD as string;
 const dbName = process.env.DB_NAME as string;
-const dbUser = process.env.DB_USER as string;
-const dbHost = process.env.DB_HOST;
-const dbPassword = process.env.DB_PASSWORD as string;
-const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
-  host: dbHost,
-  dialect: 'postgres',
+export const AppDataSource = new DataSource({
+  type: 'postgres',
+  host: host,
+  port: port,
+  username: username,
+  password: password,
+  database: dbName,
+  synchronize: true,
+  logging: false,
+  entities: [User, Organization],
+  subscribers: [],
+  migrations: [],
 });
 
-export default sequelizeConnection;
+AppDataSource.initialize()
+  .then(() => {
+    console.log('Connection successfull');
+  })
+  .catch((error) => console.log(error));

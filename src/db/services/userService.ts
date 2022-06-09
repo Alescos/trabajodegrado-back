@@ -1,27 +1,42 @@
-import { AppDataSource } from '../data-source';
+import { AppDataSource } from '../config';
 import { User, UserInput } from '../entity/User';
 
-export const createUser = async (payload: UserInput) => {
-  const userRepository = AppDataSource.getRepository(User);
-  let { email, userName, phone, password } = payload;
-  let user = new User();
-  user.email = email.toLowerCase();
-  user.name = userName;
-  user.phone = phone;
-  user.password = password;
-  const res = await userRepository
-    .createQueryBuilder()
-    .insert()
-    .into(User)
-    .values([
-      { email: email, name: userName, phone: phone, password: password },
-    ])
-    .execute();
-  console.log(res);
-  return res;
-};
+export default class UserService {
+  userRepository = AppDataSource.getRepository(User);
+  bcrypt = require('bcrypt');
+  async login(user: UserInput) {
+    const result = await this.userRepository
+      .createQueryBuilder('users')
+      .where('users.email = :email', { email: user.email })
+      .getRawOne();
+    const match = await this.bcrypt.compare(
+      user.password,
+      result['users_password']
+    );
+    if (match) {
+      return result;
+    }
+  }
 
-/* export const create = (payload: UserInput): Promise<UserOutput> => {
-  return userDal.create(payload);
-};
- */
+  async createUser(user: UserInput) {
+    const salt = await this.bcrypt.genSalt(11);
+    try {
+      const res = this.userRepository
+        .createQueryBuilder()
+        .insert()
+        .into(User)
+        .values([
+          {
+            email: user.email,
+            name: user.name,
+            phone: user.phone,
+            password: await this.bcrypt.hash(user.password, salt),
+          },
+        ])
+        .execute();
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
