@@ -42,12 +42,12 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
   try {
     const payload: UserInput = req.body;
-    const result = await userController.create(payload);
-    const id = result?.identifiers[0].id;
+    const user = await userController.create(payload);
+    const id = user?.identifiers[0].id;
     const token = createToken(id);
     const maxAge = 4 * 60 * 60;
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json(result?.generatedMaps[0]);
+    // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.status(200).json(user?.generatedMaps[0]);
   } catch (error) {
     console.log(error);
   }

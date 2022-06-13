@@ -3,7 +3,6 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -12,7 +11,7 @@ import {
 import { IsEmail, IsNotEmpty, Min } from 'class-validator';
 import { Organization } from './Organization';
 
-export interface UserInput {
+export interface AreaInput {
   id?: number;
   email: string;
   name: string;
@@ -23,18 +22,17 @@ export interface UserInput {
   deletedAt?: Date;
 }
 
-@Entity('users')
-@Index(['email'], { unique: true })
-export class User {
+@Entity('areas')
+export class Area {
   @PrimaryGeneratedColumn()
   id: number;
   @Column()
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  name: string;
   @Column()
   @IsNotEmpty()
-  name: string;
+  description: string;
   @Column()
   phone: string;
   @Column()

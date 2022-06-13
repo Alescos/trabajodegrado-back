@@ -4,6 +4,7 @@ CREATE TABLE Users (
     name VARCHAR(100) NOT NULL,
     phone VARCHAR(50),
     password VARCHAR(100) NOT NULL,
+    organization_id integer REFERENCES Organizations (id),
     createdAt DATE,
     updatedAt DATE,
     deletedAt DATE
