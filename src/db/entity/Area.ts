@@ -8,15 +8,15 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { IsEmail, IsNotEmpty, Min } from 'class-validator';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 import { Organization } from './Organization';
 
 export interface AreaInput {
   id?: number;
-  email: string;
   name: string;
+  description: string;
   phone: string;
-  password: string;
+  organization: Organization;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -35,15 +35,10 @@ export class Area {
   description: string;
   @Column()
   phone: string;
-  @Column()
-  @Min(8)
-  @IsNotEmpty()
-  password: string;
-  @ManyToOne(
-    () => Organization,
-    (organization: Organization) => organization.id
-  )
-  organization_id: Organization;
+  @ManyToOne(() => Organization, (organization) => organization.id, {
+    cascade: true,
+  })
+  organization: Organization;
   @CreateDateColumn()
   createdAt?: Date;
   @UpdateDateColumn()

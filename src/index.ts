@@ -1,10 +1,13 @@
 import express, { Express, Request, Response } from 'express';
+import areaRouter from './api/routes/areas';
+import authRouter from './api/routes/auth';
 import organizationRouter from './api/routes/organization';
 import userRouter from './api/routes/users';
 
 const app: Express = express();
 const port = process.env.PORT;
 const cors = require('cors');
+const { requireAuth } = require('./api/middleware/authMiddleware');
 const bodyParser = require('body-parser');
 
 let corsOptions = {
@@ -22,8 +25,11 @@ app.get('/', (_req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 });
 
+app.use('/', authRouter);
 app.use('/users', userRouter);
 app.use('/organization', organizationRouter);
+app.use('/areas', areaRouter);
+app.use(requireAuth);
 
 /* app.get('/organization/:id', async (req, res) => {
   try {

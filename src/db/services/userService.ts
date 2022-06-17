@@ -4,6 +4,7 @@ import { User, UserInput } from '../entity/User';
 export default class UserService {
   userRepository = AppDataSource.getRepository(User);
   bcrypt = require('bcrypt');
+
   async login(user: UserInput) {
     const result = await this.userRepository
       .createQueryBuilder('users')
@@ -37,6 +38,29 @@ export default class UserService {
       return res;
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async getUsers() {
+    try {
+      const res = await this.userRepository
+        .createQueryBuilder('users')
+        .getMany();
+      return res;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserById(id: number) {
+    try {
+      const res = await this.userRepository
+        .createQueryBuilder('users')
+        .where('user.id = :id', { id: id })
+        .getOne();
+      return res;
+    } catch (error) {
+      return error;
     }
   }
 }

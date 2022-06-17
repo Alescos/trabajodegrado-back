@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { IsNotEmpty } from 'class-validator';
+import { Area } from './Area';
 
 export interface OrganizationInput {
   id?: number;
@@ -42,8 +44,8 @@ export class Organization {
   nit: number;
   @Column()
   description: string;
-  /* @OneToMany(() => User, (user: User) => user.id)
-  users: User[]; */
+  @OneToMany(() => Area, (area) => area)
+  areas: Area[];
   @CreateDateColumn()
   createdAt?: Date;
   @UpdateDateColumn()
