@@ -17,6 +17,20 @@ export default class OrganizationService {
     }
   }
 
+  async getAreasFromOrganization(id: number) {
+    try {
+      const result = await this.organizationRepository
+        .createQueryBuilder('organizations')
+        .leftJoinAndSelect('organizations.areas', 'areas')
+        .where('organizations.id = :id', { id: id })
+        .getOne();
+      return result;
+    } catch (error) {
+      console.log('Error en servicio');
+      return error;
+    }
+  }
+
   async createOrganization(organization: OrganizationInput) {
     try {
       const result = await this.organizationRepository
@@ -31,7 +45,6 @@ export default class OrganizationService {
           },
         ])
         .execute();
-      console.log(`resultado query ${result}`);
       return result;
     } catch (error) {
       console.log(error);

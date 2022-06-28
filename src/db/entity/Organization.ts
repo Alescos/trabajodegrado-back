@@ -10,11 +10,12 @@ import {
 
 import { IsNotEmpty } from 'class-validator';
 import { Area } from './Area';
+import { User } from './User';
 
 export interface OrganizationInput {
   id?: number;
   name: string;
-  nit: number;
+  nit: string;
   description: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -24,7 +25,7 @@ export interface OrganizationInput {
 export interface OrganizationOutput {
   id: number;
   name: string;
-  nit: number;
+  nit: string;
   description: string;
   createdAt: Date;
   updatedAt: Date;
@@ -41,11 +42,13 @@ export class Organization {
   name: string;
   @IsNotEmpty()
   @Column()
-  nit: number;
+  nit: string;
   @Column()
   description: string;
   @OneToMany(() => Area, (area) => area)
   areas: Area[];
+  @OneToMany(() => User, (user) => user)
+  user: User[];
   @CreateDateColumn()
   createdAt?: Date;
   @UpdateDateColumn()

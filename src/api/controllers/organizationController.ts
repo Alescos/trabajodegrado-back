@@ -8,14 +8,17 @@ export class OrganizationController {
 
   async get(id: number) {
     const organization = await this.organizationService.getOrganization(id);
-    console.log(organization);
     return organization;
+  }
+
+  async getAreas(id: number) {
+    const areas = await this.organizationService.getAreasFromOrganization(id);
+    return areas;
   }
 
   create(payload: OrganizationInput) {
     const { name, nit, description } = payload;
     const newOrganization = new Organization();
-    // newOrganization.name = name.toUpperCase();
     newOrganization.name = name;
     newOrganization.nit = nit;
     newOrganization.description = description;

@@ -26,10 +26,10 @@ app.get('/', (_req: Request, res: Response) => {
 });
 
 app.use('/', authRouter);
+app.use(requireAuth);
 app.use('/users', userRouter);
 app.use('/organization', organizationRouter);
 app.use('/areas', areaRouter);
-app.use(requireAuth);
 
 /* app.get('/organization/:id', async (req, res) => {
   try {

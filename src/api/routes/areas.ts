@@ -27,9 +27,10 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.get('/getAll', async (_req, res) => {
+router.get('/getAll/:id', async (req, res) => {
   try {
-    const areas = await areaController.getAll();
+    const id = parseInt(req.params.id);
+    const areas = await areaController.getAll(id);
     if (areas) {
       res.status(200).json({
         data: areas,
@@ -44,6 +45,7 @@ router.get('/getAll', async (_req, res) => {
 });
 
 router.post('/register', async (req, res) => {
+  console.log(req.body.organization);
   try {
     const payload: AreaInput = {
       name: req.body.name,

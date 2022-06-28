@@ -11,19 +11,17 @@ router.post('/login', async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    const user = await userController.login(email, password);
-    if (user) {
-      const token = createToken(user['users_id']);
-      // const maxAge = 4 * 60 * 60;
-      res
-        .status(200)
-        // .cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-        .json({
-          name: user['users_name'],
-          email: user['users_email'],
+    let user = await userController.login(email, password);
+    if (user !== undefined) {
+      const token = createToken(user.users_id);
+      res.status(200).json({
+        data: {
+          name: user.users_name,
+          email: user.users_email,
+          organization: user.users_organizationId,
           token: token,
-          message: 'Login exitoso',
-        });
+        },
+      });
     } else {
       res.status(401).json({
         error: 'Credenciales incorrectas',

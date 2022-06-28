@@ -16,11 +16,19 @@ export interface UserInput {
   id?: number;
   email: string;
   name: string;
+  organization: Organization;
   phone: string;
   password: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
+}
+export interface UserOutput {
+  id?: number;
+  email: string;
+  name: string;
+  phone: string;
+  organization: number;
 }
 
 @Entity('users')
@@ -43,9 +51,12 @@ export class User {
   password: string;
   @ManyToOne(
     () => Organization,
-    (organization: Organization) => organization.id
+    (organization: Organization) => organization.id,
+    {
+      cascade: true,
+    }
   )
-  organization_id: Organization;
+  organization: Organization;
   @CreateDateColumn()
   createdAt?: Date;
   @UpdateDateColumn()

@@ -8,50 +8,20 @@ const router = express.Router();
 const service = new UserService();
 const userController = new UserController(service);
 
-router.get('/getAll', async (_req, res) => {
-  const users = await userController.getUsers();
-  /* try {
-    const data = users
-  } catch (error) {
-    
-  } */
+router.get('/getAll/:id', async (req, res) => {
+  const id = req.params.id;
+  const users = await userController.getUsers(id);
   if (users) {
     res.status(200).json({
-      datos: users,
+      data: users,
       message: 'Respuesta de usuarios',
     });
   }
 });
 
-router.post('/login', async (req, res) => {
-  try {
-    const email = req.body.email;
-    const password = req.body.password;
-    const user = await userController.login(email, password);
-    if (user) {
-      const token = createToken(user['users_id']);
-      // const maxAge = 4 * 60 * 60;
-      res
-        .status(200)
-        // .cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-        .json({
-          name: user['users_name'],
-          email: user['users_email'],
-          token: token,
-          message: 'Login exitoso',
-        });
-    } else {
-      res.status(401).json({
-        error: 'Credenciales incorrectas',
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 router.post('/register', async (req, res) => {
   try {
+    console.log(req.body);
     const payload: UserInput = req.body;
     const user = await userController.create(payload);
     const id = user?.identifiers[0].id;

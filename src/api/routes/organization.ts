@@ -14,8 +14,27 @@ router.get('/:id', async (req, res) => {
     if (organization) {
       res.status(200).json({
         name: organization.name,
-        NIT: organization.NIT,
+        nit: organization.nit,
         description: organization.description,
+        createdAt: organization.createdAt,
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      message: 'Organization not found',
+      description: error,
+    });
+  }
+});
+
+router.get('/areas/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    console.log(id);
+    const organization: any = await organizationController.getAreas(id);
+    if (organization) {
+      res.status(200).json({
+        data: organization,
       });
     }
   } catch (error) {
@@ -30,7 +49,7 @@ router.post('/register', async (req, res) => {
   try {
     const payload: OrganizationInput = {
       name: req.body.name,
-      nit: parseInt(req.body.nit),
+      nit: req.body.nit,
       description: req.body.description,
     };
     const result = await organizationController.create(payload);

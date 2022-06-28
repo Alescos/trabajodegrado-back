@@ -32,6 +32,7 @@ export default class UserService {
             name: user.name,
             phone: user.phone,
             password: await this.bcrypt.hash(user.password, salt),
+            organization: user.organization,
           },
         ])
         .execute();
@@ -41,10 +42,11 @@ export default class UserService {
     }
   }
 
-  async getUsers() {
+  async getUsers(id: string) {
     try {
       const res = await this.userRepository
         .createQueryBuilder('users')
+        .where('users.organizationId = :id', { id: id })
         .getMany();
       return res;
     } catch (error) {

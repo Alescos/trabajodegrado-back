@@ -17,12 +17,13 @@ export default class AreaService {
     }
   }
 
-  async getAreas() {
+  async getAreasFromOrganization(id: number) {
     try {
-      const res = await this.areaRepository
+      const result = await this.areaRepository
         .createQueryBuilder('areas')
+        .where('areas.organizationId = :id', { id: id })
         .getMany();
-      return res;
+      return result;
     } catch (error) {
       console.log('Error en servicio');
       return error;
@@ -44,7 +45,6 @@ export default class AreaService {
           },
         ])
         .execute();
-      console.log(`resultado query ${result}`);
       return result;
     } catch (error) {
       console.log(error);

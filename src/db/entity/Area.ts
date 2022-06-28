@@ -34,6 +34,8 @@ export class Area {
   @IsNotEmpty()
   description: string;
   @Column()
+  location: string;
+  @Column()
   phone: string;
   @ManyToOne(() => Organization, (organization) => organization.id, {
     cascade: true,

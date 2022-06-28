@@ -11,8 +11,8 @@ export class AreaController {
     return area;
   }
 
-  async getAll() {
-    const areas = await this.areaService.getAreas();
+  async getAll(id: number) {
+    const areas = await this.areaService.getAreasFromOrganization(id);
     return areas;
   }
 

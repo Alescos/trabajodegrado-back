@@ -4,10 +4,13 @@ CREATE TABLE Users (
     name VARCHAR(100) NOT NULL,
     phone VARCHAR(50),
     password VARCHAR(100) NOT NULL,
-    organization_id integer REFERENCES Organizations (id),
+    organization int,
     createdAt DATE,
     updatedAt DATE,
-    deletedAt DATE
+    deletedAt DATE,
+    CONSTRAINT organization
+        FOREIGN KEY (id)
+        REFERENCES Organizations(id)
     );
 
 CREATE TABLE Organizations(
