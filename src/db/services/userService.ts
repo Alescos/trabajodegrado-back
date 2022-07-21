@@ -33,6 +33,7 @@ export default class UserService {
             phone: user.phone,
             password: await this.bcrypt.hash(user.password, salt),
             organization: user.organization,
+            role: user.role,
           },
         ])
         .execute();
@@ -60,6 +61,25 @@ export default class UserService {
         .createQueryBuilder('users')
         .where('user.id = :id', { id: id })
         .getOne();
+      return res;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async editUser(user: UserInput) {
+    try {
+      const res = await this.userRepository
+        .createQueryBuilder('users')
+        .update(User)
+        .set({
+          email: user.email,
+          name: user.name,
+          phone: user.phone,
+          password: user.password,
+        })
+        .where('user.id = :id', { id: user.id })
+        .execute();
       return res;
     } catch (error) {
       return error;

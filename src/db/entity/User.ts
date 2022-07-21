@@ -17,6 +17,7 @@ export interface UserInput {
   email: string;
   name: string;
   organization: Organization;
+  role: number;
   phone: string;
   password: string;
   createdAt?: Date;
@@ -28,6 +29,7 @@ export interface UserOutput {
   email: string;
   name: string;
   phone: string;
+  role: number;
   organization: number;
 }
 
@@ -45,6 +47,8 @@ export class User {
   name: string;
   @Column()
   phone: string;
+  @Column()
+  role: number;
   @Column()
   @Min(8)
   @IsNotEmpty()

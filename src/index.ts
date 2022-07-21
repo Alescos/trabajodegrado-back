@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import areaRouter from './api/routes/areas';
 import authRouter from './api/routes/auth';
+import equipmentRouter from './api/routes/equipment';
 import organizationRouter from './api/routes/organization';
 import userRouter from './api/routes/users';
 
@@ -17,38 +18,19 @@ let corsOptions = {
 };
 
 // app.use(cors(corsOptions));
-
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.get('/', (_req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 });
 
 app.use('/', authRouter);
+app.use('/equipments', equipmentRouter);
 app.use(requireAuth);
-app.use('/users', userRouter);
 app.use('/organization', organizationRouter);
+app.use('/users', userRouter);
 app.use('/areas', areaRouter);
-
-/* app.get('/organization/:id', async (req, res) => {
-  try {
-    const id = parseInt(req.params.id);
-    const organization: any = await organizationController.get(id);
-    if (organization) {
-      res.status(200).json({
-        name: organization.name,
-        NIT: organization.NIT,
-        description: organization.description,
-      });
-    }
-  } catch (error) {
-    res.status(404).json({
-      message: 'Organization not found',
-      description: error,
-    });
-  }
-}); */
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

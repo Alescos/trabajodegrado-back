@@ -42,6 +42,7 @@ export default class AreaService {
             description: area.description,
             phone: area.phone,
             organization: area.organization,
+            location: area.location,
           },
         ])
         .execute();

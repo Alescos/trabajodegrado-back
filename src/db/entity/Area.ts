@@ -17,6 +17,7 @@ export interface AreaInput {
   description: string;
   phone: string;
   organization: Organization;
+  location: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;

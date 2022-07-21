@@ -9,16 +9,15 @@ const areaController = new AreaController(service);
 
 router.get('/:id', async (req, res) => {
   try {
+    console.log('Get Area');
     const id = parseInt(req.params.id);
     const area: any = await areaController.getOne(id);
-    if (area) {
-      res.status(200).json({
-        name: area.name,
-        description: area.description,
-        phone: area.phone,
-        organization: area.organization,
-      });
-    }
+    res.status(200).json({
+      name: area.name,
+      description: area.description,
+      phone: area.phone,
+      organization: area.organization,
+    });
   } catch (error) {
     res.status(404).json({
       message: 'Organization not found',
@@ -45,13 +44,13 @@ router.get('/getAll/:id', async (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-  console.log(req.body.organization);
   try {
     const payload: AreaInput = {
       name: req.body.name,
       description: req.body.description,
       phone: req.body.phone,
       organization: req.body.organization,
+      location: req.body.location,
     };
     const result = await areaController.create(payload);
     res.status(200).json(result);

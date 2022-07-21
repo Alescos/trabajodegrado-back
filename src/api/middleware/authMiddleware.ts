@@ -11,8 +11,9 @@ const requireAuth = (req: any, res: any, next: Function) => {
       process.env.JWT_SECRET,
       (err: Error, decodedToken: string) => {
         if (err) {
+          console.log('eror en la autenticación');
           console.log(err.message);
-          res.redirect('/login');
+          res.error(err.message);
         } else {
           console.log(decodedToken);
           next();

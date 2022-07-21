@@ -17,12 +17,13 @@ export class AreaController {
   }
 
   create(payload: AreaInput) {
-    const { name, description, phone, organization } = payload;
+    const { name, description, phone, organization, location } = payload;
     const newArea = new Area();
     newArea.name = name;
     newArea.description = description;
     newArea.phone = phone;
     newArea.organization = organization;
+    newArea.location = location;
     const res = this.areaService.createArea(newArea);
     return res;
   }

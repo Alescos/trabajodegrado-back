@@ -7,14 +7,14 @@ export class UserController {
   }
 
   create(payload: UserInput) {
-    const { email, name, phone, password, organization } = payload;
+    const { email, name, phone, password, organization, role } = payload;
     const newUser = new User();
     newUser.email = email.toLowerCase();
-    // newUser.email = email;
     newUser.name = name;
     newUser.phone = phone;
     newUser.password = password;
     newUser.organization = organization;
+    newUser.role = role;
     const res = this.userService.createUser(newUser);
     return res;
   }
