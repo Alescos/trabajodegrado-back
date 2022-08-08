@@ -3,6 +3,7 @@ import areaRouter from './api/routes/areas';
 import authRouter from './api/routes/auth';
 import equipmentRouter from './api/routes/equipment';
 import organizationRouter from './api/routes/organization';
+import recordRouter from './api/routes/record';
 import userRouter from './api/routes/users';
 
 const app: Express = express();
@@ -31,6 +32,7 @@ app.use(requireAuth);
 app.use('/organization', organizationRouter);
 app.use('/users', userRouter);
 app.use('/areas', areaRouter);
+app.use('/records', recordRouter);
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

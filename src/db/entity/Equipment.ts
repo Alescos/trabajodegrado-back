@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,7 +20,6 @@ export interface EquipmentInput {
   purchasedAt: string;
   status: string;
   classEquipment: string;
-  history?: string;
   image?: string;
   area: string;
   createdAt?: Date;
@@ -37,7 +37,7 @@ export interface EquipmentOutput {
   purchasedAt: string;
   status: string;
   classEquipment: string;
-  history?: string;
+  register?: string[];
   image?: string;
   area: string;
   createdAt?: Date;
@@ -63,6 +63,7 @@ export class Equipment {
   @Column()
   alias: string;
   @Column()
+  @Index({ unique: true })
   serial: string;
   @Column()
   purchasedAt: string;
@@ -70,10 +71,12 @@ export class Equipment {
   status: string;
   @Column()
   classEquipment: string;
+  /* @ManyToOne(() => Record, (record: Record) => record.equipment, {
+    cascade: true,
+  })
+  record?: string[]; */
   @Column()
-  history: string;
-  @Column()
-  image: string;
+  image?: string;
   @Column()
   area: string;
   @CreateDateColumn()

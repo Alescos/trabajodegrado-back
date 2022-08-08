@@ -9,14 +9,14 @@ const areaController = new AreaController(service);
 
 router.get('/:id', async (req, res) => {
   try {
-    console.log('Get Area');
     const id = parseInt(req.params.id);
     const area: any = await areaController.getOne(id);
     res.status(200).json({
       name: area.name,
       description: area.description,
       phone: area.phone,
-      organization: area.organization,
+      location: area.location,
+      createdAt: area.createdAt,
     });
   } catch (error) {
     res.status(404).json({

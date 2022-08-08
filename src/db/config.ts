@@ -4,6 +4,7 @@ import { DataSource } from 'typeorm';
 import { Area } from './entity/Area';
 import { Equipment } from './entity/Equipment';
 import { Organization } from './entity/Organization';
+import { Record } from './entity/Record';
 import { User } from './entity/User';
 dotenv.config();
 const host = process.env.DB_HOST as string;
@@ -20,7 +21,7 @@ export const AppDataSource = new DataSource({
   database: dbName,
   synchronize: true,
   logging: false,
-  entities: [User, Organization, Area, Equipment],
+  entities: [User, Organization, Area, Equipment, Record],
   subscribers: [],
   migrations: [],
 });

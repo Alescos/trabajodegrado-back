@@ -46,7 +46,6 @@ export class EquipmentService {
             purchasedAt: equipment.purchasedAt,
             status: equipment.status,
             classEquipment: equipment.classEquipment,
-            history: equipment.history,
             area: equipment.area,
             image: equipment.image,
           },
