@@ -1,4 +1,5 @@
 import { Record, RecordInput } from '../../db/entity/Record';
+import AreaService from '../../db/services/AreaService';
 import { RecordService } from '../../db/services/RecordService';
 export class RecordController {
   constructor(private recordService: RecordService) {
@@ -7,6 +8,11 @@ export class RecordController {
 
   getAllRecords(id: string) {
     const records = this.recordService.getRecords(id);
+    return records;
+  }
+
+  getRecordsByArea(id: string) {
+    const records = this.recordService.getReportsByArea(id);
     return records;
   }
 
@@ -19,8 +25,12 @@ export class RecordController {
       description,
       type,
       priority,
+      area,
+      areaName,
+      equipmentName,
     } = payload;
 
+    const areaService = new AreaService();
     const newRecord = new Record();
     newRecord.equipment = equipment;
     newRecord.reportDate = reportDate;
@@ -30,7 +40,18 @@ export class RecordController {
     newRecord.type = type;
     newRecord.organization = organization;
     newRecord.priority = priority!;
-    const res = this.recordService.create(newRecord);
+    newRecord.area = area;
+    newRecord.equipmentName = equipmentName;
+    const res = areaService
+      .getAreaById(parseInt(area))
+      .then((data: any) => {
+        areaName = data.name;
+        newRecord.areaName = areaName;
+      })
+      .then(() => {
+        this.recordService.create(newRecord);
+      });
+
     return res;
   }
 

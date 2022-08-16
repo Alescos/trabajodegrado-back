@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const requireAuth = (req: any, res: any, next: Function) => {
   const bearerHeader = req.headers['authorization'];
+
   const bearer = bearerHeader.split(' ');
   const token = bearer[1];
 

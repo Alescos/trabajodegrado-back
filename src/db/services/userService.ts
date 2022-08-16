@@ -31,6 +31,7 @@ export default class UserService {
             email: user.email,
             name: user.name,
             phone: user.phone,
+            areas: user.areas,
             password: await this.bcrypt.hash(user.password, salt),
             organization: user.organization,
             role: user.role,
@@ -52,6 +53,42 @@ export default class UserService {
       return res;
     } catch (error) {
       return error;
+    }
+  }
+
+  async getUsersByAreas(id: string, organization: string) {
+    try {
+      /* const area = await this.userRepository.findBy({
+        areas: ArrayContains([id]),
+      }); */
+      const area = [id];
+      /* const users = await this.userRepository.find();
+      console.log(users[0].areas); */
+      /* const users = await this.userRepository
+        .createQueryBuilder('users')
+        .where('users.user.areas @> :area', { area: area });
+
+      console.log(users); */
+      /* const users = await this.userRepository.find({
+        relations: {
+          organization: true,
+        },
+        where: [
+          {
+            areas: ArrayContains([id]),
+            
+            
+          },
+        ],
+      }); */
+      const users = await this.userRepository
+        .createQueryBuilder('users')
+        .where('users.organizationId = :id', { id: organization })
+        .andWhere('users.areas @> :area', { area: area })
+        .getMany();
+      return users;
+    } catch (error) {
+      console.log(error);
     }
   }
 

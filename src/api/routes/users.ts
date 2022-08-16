@@ -21,11 +21,19 @@ router.get('/getAll/:id', async (req, res) => {
 router.post('/register', async (req, res) => {
   try {
     const payload: UserInput = req.body;
+    console.log(payload);
     const user = await userController.create(payload);
     res.status(200).json(user?.generatedMaps[0]);
   } catch (error) {
     console.log(error);
   }
+});
+
+router.get('/getUsersByArea/:organization/:id', async (req, res) => {
+  const organization = req.params.organization;
+  const id = req.params.id;
+  const users = await userController.getUsersByAreas(id, organization);
+  res.send(JSON.stringify(users));
 });
 
 router.post('/update', async (req, res) => {

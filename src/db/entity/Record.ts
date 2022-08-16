@@ -16,6 +16,9 @@ export interface RecordInput {
   equipment: string;
   reportDate: Date;
   organization: string;
+  area: string;
+  areaName: string;
+  equipmentName: string;
   user: string;
   description: string;
   type: string;
@@ -31,6 +34,9 @@ export interface RecordOutput {
   reportDate: Date;
   user: string;
   organization: string;
+  area: string;
+  areaName: string;
+  equipmentName: string;
   description: string;
   type: string;
   priority: string;
@@ -57,6 +63,15 @@ export class Record {
   @Column()
   @IsNotEmpty()
   description: string;
+  @Column()
+  @IsNotEmpty()
+  area: string;
+  @Column()
+  @IsNotEmpty()
+  areaName: string;
+  @Column()
+  @IsNotEmpty()
+  equipmentName: string;
   @Column()
   @IsNotEmpty()
   type: string;

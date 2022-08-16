@@ -7,7 +7,7 @@ export class UserController {
   }
 
   create(payload: UserInput) {
-    const { email, name, phone, password, organization, role } = payload;
+    const { email, name, phone, password, organization, role, areas } = payload;
     const newUser = new User();
     newUser.email = email.toLowerCase();
     newUser.name = name;
@@ -15,6 +15,7 @@ export class UserController {
     newUser.password = password;
     newUser.organization = organization;
     newUser.role = role;
+    newUser.areas = areas!;
     const res = this.userService.createUser(newUser);
     return res;
   }
@@ -29,6 +30,12 @@ export class UserController {
 
   getUsers(id: string) {
     const res = this.userService.getUsers(id);
+    return res;
+  }
+
+  getUsersByAreas(id: string, organization: string) {
+    const res = this.userService.getUsersByAreas(id, organization);
+    console.log(res);
     return res;
   }
 

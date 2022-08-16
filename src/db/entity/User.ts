@@ -19,6 +19,7 @@ export interface UserInput {
   organization: Organization;
   role: number;
   phone: string;
+  areas?: string;
   password: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -29,6 +30,7 @@ export interface UserOutput {
   email: string;
   name: string;
   phone: string;
+  areas: string[];
   role: number;
   organization: number;
 }
@@ -61,6 +63,8 @@ export class User {
     }
   )
   organization: Organization;
+  @Column({ array: true })
+  areas: string;
   @CreateDateColumn()
   createdAt?: Date;
   @UpdateDateColumn()

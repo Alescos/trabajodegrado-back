@@ -18,6 +18,29 @@ router.get('/getAll/:id', async (req, res) => {
   }
 });
 
+router.get('/byArea/:id', async (req, res) => {
+  const id = req.params.id;
+  const data = await recordController.getRecordsByArea(id);
+  if (data) {
+    // res.send(data);
+    res.status(200).json({
+      value: data,
+      message: 'Registros por Area',
+    });
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  const id = req.params.id;
+  const record = await recordController.getRecord(id);
+  if (record) {
+    res.status(200).json({
+      data: record,
+      message: `Resultado del registro ${id}`,
+    });
+  }
+});
+
 router.post('/register', async (req, res) => {
   try {
     const payload: RecordInput = req.body;

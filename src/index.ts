@@ -27,10 +27,10 @@ app.get('/', (_req: Request, res: Response) => {
 });
 
 app.use('/', authRouter);
-app.use('/equipments', equipmentRouter);
 app.use(requireAuth);
-app.use('/organization', organizationRouter);
 app.use('/users', userRouter);
+app.use('/equipments', equipmentRouter);
+app.use('/organization', organizationRouter);
 app.use('/areas', areaRouter);
 app.use('/records', recordRouter);
 
