@@ -56,7 +56,22 @@ export class RecordController {
   }
 
   getRecord(id: string) {
-    const equipment = this.recordService.getRecordById(id);
-    return equipment;
+    const record = this.recordService.getRecordById(id);
+    return record;
+  }
+
+  getRecordsByType(id: string) {
+    const data = this.recordService.getReportsByType(id);
+    return data;
+  }
+
+  getRecordsByDate(id: string) {
+    const data = this.recordService.getsAllReportsByDate(id);
+    return data;
+  }
+
+  getRecordsByTypeByArea(id: string) {
+    const data = this.recordService.getReportsByTypeByArea(id);
+    return data;
   }
 }

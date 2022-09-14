@@ -121,10 +121,35 @@ router.post(
       console.log('Rename complete!');
     });
 
+    const result = await equipmentController.uploadEquipmentsImage(
+      filePath,
+      id
+    );
     res.status(200).json({
-      newPath: 'filePath',
+      id: id,
+      newPath: filePath,
+      result: result,
     });
   }
 );
+
+router.get('/downloadImage/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const response = await equipmentController.getEquipmentById(id);
+    let equipment: EquipmentOutput;
+    response ? (equipment = response as EquipmentOutput) : null;
+    res.download(
+      equipment!.image ? (equipment!.image as string) : equipment!.image!,
+      (err) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 export default router;

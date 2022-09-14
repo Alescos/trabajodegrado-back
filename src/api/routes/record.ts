@@ -22,10 +22,32 @@ router.get('/byArea/:id', async (req, res) => {
   const id = req.params.id;
   const data = await recordController.getRecordsByArea(id);
   if (data) {
-    // res.send(data);
     res.status(200).json({
       value: data,
       message: 'Registros por Area',
+    });
+  }
+});
+router.get('/byType/:id', async (req, res) => {
+  const id = req.params.id;
+  const data = await recordController.getRecordsByType(id);
+  if (data) {
+    // res.send(data);
+    res.status(200).json({
+      value: data,
+      message: 'Registros por Tipo',
+    });
+  }
+});
+router.get('/byDate/:id', async (req, res) => {
+  const id = req.params.id;
+  const data = await recordController.getRecordsByDate(id);
+  console.log(data);
+  if (data) {
+    // res.send(data);
+    res.status(200).json({
+      value: data,
+      message: 'Registros por Fecha',
     });
   }
 });
@@ -56,6 +78,21 @@ router.post('/register', async (req, res) => {
 router.post('/update', async (req, res) => {
   req.headers.authorization;
   res.send('Guardando registro');
+});
+
+router.get('/:id/TypesByArea', async (req, res) => {
+  const id = req.params.id;
+  const records = await recordController.getRecordsByTypeByArea(id);
+  if (records) {
+    res.status(200).json({
+      value: records,
+      message: `Resultado de la organización ${id}`,
+    });
+  } else {
+    res.status(402).json({
+      message: 'No se han encontrado registros',
+    });
+  }
 });
 
 export default router;

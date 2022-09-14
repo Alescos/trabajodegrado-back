@@ -15,12 +15,11 @@ router.post('/login', async (req, res) => {
     if (user !== undefined) {
       const token = createToken(user.users_id);
       res.status(200).json({
-        data: {
-          name: user.users_name,
-          email: user.users_email,
-          organization: user.users_organizationId,
-          token: token,
-        },
+        id: user.users_id,
+        name: user.users_name,
+        email: user.users_email,
+        organization: user.users_organizationId,
+        token: token,
       });
     } else {
       res.status(401).json({

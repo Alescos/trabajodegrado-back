@@ -33,6 +33,9 @@ export interface UserOutput {
   areas: string[];
   role: number;
   organization: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
 }
 
 @Entity('users')

@@ -58,29 +58,7 @@ export default class UserService {
 
   async getUsersByAreas(id: string, organization: string) {
     try {
-      /* const area = await this.userRepository.findBy({
-        areas: ArrayContains([id]),
-      }); */
       const area = [id];
-      /* const users = await this.userRepository.find();
-      console.log(users[0].areas); */
-      /* const users = await this.userRepository
-        .createQueryBuilder('users')
-        .where('users.user.areas @> :area', { area: area });
-
-      console.log(users); */
-      /* const users = await this.userRepository.find({
-        relations: {
-          organization: true,
-        },
-        where: [
-          {
-            areas: ArrayContains([id]),
-            
-            
-          },
-        ],
-      }); */
       const users = await this.userRepository
         .createQueryBuilder('users')
         .where('users.organizationId = :id', { id: organization })
@@ -92,11 +70,11 @@ export default class UserService {
     }
   }
 
-  async getUserById(id: number) {
+  async getUserById(id: string) {
     try {
       const res = await this.userRepository
         .createQueryBuilder('users')
-        .where('user.id = :id', { id: id })
+        .where('users.id = :id', { id: id })
         .getOne();
       return res;
     } catch (error) {

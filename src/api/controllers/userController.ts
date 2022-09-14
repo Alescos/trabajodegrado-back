@@ -35,11 +35,10 @@ export class UserController {
 
   getUsersByAreas(id: string, organization: string) {
     const res = this.userService.getUsersByAreas(id, organization);
-    console.log(res);
     return res;
   }
 
-  getUser(id: number) {
+  getUser(id: string) {
     const res = this.userService.getUserById(id);
     return res;
   }

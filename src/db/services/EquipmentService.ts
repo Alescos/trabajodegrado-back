@@ -56,4 +56,16 @@ export class EquipmentService {
       console.log(error);
     }
   }
+
+  async updateImagePath(image: string, id: string) {
+    const result = await this.equipmentrepository
+      .createQueryBuilder('equipments')
+      .update(Equipment)
+      .set({
+        image: image,
+      })
+      .where('equipments.id=:id', { id: id })
+      .execute();
+    return result;
+  }
 }

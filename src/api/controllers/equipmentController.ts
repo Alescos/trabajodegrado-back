@@ -48,4 +48,9 @@ export class EquipmentController {
     const equipment = this.equimentService.getEquipmentById(id);
     return equipment;
   }
+
+  uploadEquipmentsImage(path: string, id: string) {
+    const result = this.equimentService.updateImagePath(path, id);
+    return result;
+  }
 }
